@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    console.log('hello world~~~')
+
+    let longestCommonPrefix = function(strs) {
+        if(strs.length === 0) return ''
+        if(strs.length === 1) return strs[0]
+        // 先选出来最短的字符串
+        strs.sort((a, b) => a.length - b.length)
+        if(strs[0].length === 0) return ''
+        // 选出子串比较其他字符串中时候含有
+        let shortestStr = strs[0]
+        let longestSubstr = ''
+
+        for (let i = 0; i < shortestStr.length; i++) {
+            if(shortestStr.slice(0, i+1)) {
+                if(otherIncludesSubstr(shortestStr.slice(0, i+1), strs)) {
+                    longestSubstr = shortestStr.slice(0, i+1)
+                }
+            }else {
+                longestSubstr =  shortestStr[0]
+            }
+        }
+        return longestSubstr
+
+    };
+    let otherIncludesSubstr = function(subStr, strs) {
+        let flag = true
+        for (let i = 1; i < strs.length; i++) {
+            if(!strs[i].startsWith(subStr)) {
+                flag = false
+                return flag
+            }
+        }
+        return flag
+    }
+
+    // console.log(longestCommonPrefix(['light', 'flige', 'fligower']));
+    // console.log(longestCommonPrefix(['', 'light', 'fligower']));
+    console.log(longestCommonPrefix(['ab', 'a']));
+    console.log(longestCommonPrefix(['reflower', 'flow', 'flight']));
+
+
+</script>
+</html>

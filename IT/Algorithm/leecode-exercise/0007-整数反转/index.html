@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    console.log('hello world~')
+    let reverse = function(num) {
+        // 判断符号： 1: xxx         2:-xxx          3:+xxx
+        // 转字符串--->反转
+        let sym = ''
+        let value
+        if(num < 0) {
+            sym = '-'
+        }
+        val = num > Math.pow(2, 31)? 0: (num + '').split('').reverse().join('')
+        val = Number.parseInt(val) > Math.pow(2, 31)? 0: val
+        return Number.parseInt(sym + val)
+    };
+
+    console.log(123 + '' + '---' + reverse(123))
+    console.log(-6374 + '' + '---' + reverse(-6374))
+    console.log(0 + '' + '---' + reverse(0))
+    console.log(-0 + '' + '---' + reverse(-0))
+    console.log(Math.pow(2, 31) < 9646324351)
+    console.log(1534236469 + '' + '---' + reverse(1534236469))
+</script>
+</html>

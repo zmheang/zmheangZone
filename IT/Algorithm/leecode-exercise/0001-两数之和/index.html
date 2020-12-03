@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  var twoSum = function(nums, target) {
+    let obj = Object.create(null)
+    for (let i = 0; i < nums.length; i++) {
+      if(obj[target - nums[i]] || obj[target - nums[i]] == 0) {
+        return [obj[target - nums[i]], i]
+      }else {
+        obj[nums[i]] = i
+      }
+    }
+    
+    
+    // let i = 0;
+    // let temp = [];
+    // while (i < nums.length) {
+    //   let num = target - nums[i];
+    //   if(temp[num] != undefined) {
+    //     return [temp[num],i];
+    //   }
+    //   temp[nums[i]] = i
+    //   i ++;
+    // }
+
+    // let list = []
+    // let copy = nums
+    // for (let i = 0; i < copy.length; i++) {
+    //   for (let j = i+1; j < copy.length; j++) {
+    //     if(copy[j] === (target - copy[i])) {
+    //       list.push(i)
+    //       list.push(j)
+    //       copy[j] = target + 1
+    //     }
+    //   }
+    // }
+    // return list
+
+    // let list = [];
+    // nums.forEach((item,index)=>{
+    //   for(let i = index+1; i<nums.length; i++){
+    //     if(nums[i] + item == target){
+    //       list.push(index);
+    //       list.push(i);
+    //     }
+    //   }
+    // });
+    // return list;
+  };
+  // console.log(twoSum([1,4,11,5,3,6,7,8,12,15], 15))
+  console.log(twoSum([2, 7, 11, 15], 9))
+  console.log(twoSum([3, 2, 4], 6))
+  // console.log(twoSum([3, 3], 6))
+</script>
+</body>
+</html>

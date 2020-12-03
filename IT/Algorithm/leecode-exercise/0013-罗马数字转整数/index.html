@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    console.log('hello world~')
+    let romanToInt = function(str) {
+        // 特殊情况：
+        //      IV --- 4
+        //      IX --- 9
+        //      XL --- 40
+        //      XC --- 90
+        //      CD --- 400
+        //      CM --- 900
+        let map1 = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+        let map2 = {'IV': 4, 'IX': 9, 'XL': 40, 'XC': 90, 'CD': 400, 'CM': 900}
+        // MCMXCIV      1000 + 900 + 90 + 4
+        let sum = 0
+        let strArr = str.split('')
+        if(strArr.length == 0) return 0
+        for (let i = 0; i < strArr.length; i++) {
+            if(strArr[i + 1] && Object.keys(map2).includes(strArr[i] + strArr[i + 1])) {
+                sum += map2[strArr[i] + strArr[i + 1]]
+                i++
+            }else {
+                sum += map1[strArr[i]]
+            }
+        }
+        return sum
+    };
+
+    console.log(romanToInt('III'))                     // 3
+    console.log(romanToInt('IV'))                      // 4
+    console.log(romanToInt('IX'))                      // 9
+    console.log(romanToInt('LVIII'))                   // 50 + 5 + 3 = 58
+    console.log(romanToInt('MCMXCIV'))                 // 1000 + 900 + 90 + 4 = 1994
+</script>
+</html>
+
+
+晚安  大家~~~

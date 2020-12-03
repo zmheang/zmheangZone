@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  console.log('hello world ~~~')
+  const strStr = function(haystack, needle) {
+    if(needle === '') {return 0}
+    let res
+    for (let i = 0; i < haystack.length - needle.length + 1; i++) {
+      if(haystack[i] === needle[0]) {
+        let flag = true
+        for (let j = 0; j < needle.length; j++) {
+          if(haystack[i + j] !== needle[j]) {
+            flag = false
+          }
+        }
+        if(flag) {
+          res = i
+          return res
+        }else {
+          continue
+        }
+      }else {
+        continue
+      }
+    }
+    if(!res) {
+      return -1
+    }
+  };
+
+  console.log(strStr('mississippi', 'issip'))
+  // console.log(strStr('hello', 'll'))
+  // console.log(strStr('aaaaaa', 'bba'))
+  // console.log(strStr('a', 'a'))
+</script>
+</html>

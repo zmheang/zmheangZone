@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  console.log('hello world ~~~')
+  const maxSubArray = function(nums) {
+    let left = 0, right = 0, max = nums[left], max1 = nums[left]
+    while(typeof (nums[left]) != 'undefined' && typeof (nums[right]) != 'undefined') {
+      if (nums[left] < 0) {
+        max = Math.max(max, nums[left])
+        max1 = nums[left]
+        left++
+        right = left
+        // max1 = nums[right]
+      } else {
+        if (left === right) {
+          max = Math.max(max, nums[left])
+          max1 = nums[left]
+          right++
+          continue
+        }
+
+        if (nums[right] + max1 <= 0) {
+          left = right
+          max = Math.max(max1, max)
+          left = right
+          continue
+        }
+        max1 += nums[right]
+        right++
+      }
+    }
+    return Math.max(max, max1)
+  };
+
+
+  // console.log(maxSubArray([-2, 1, -3, 4,-1, 2, 1, -5, 4]))
+  // console.log(maxSubArray([2, -1, 3]))
+  // console.log(maxSubArray([-2, 1, -3]))
+  // console.log(maxSubArray([1, -3]))
+  // console.log(maxSubArray([-3]))
+  // console.log(maxSubArray([-2]))
+  console.log(maxSubArray([1, 2, -1, -2, 2, 1, -2, 1, 4, -5, 4]))
+  // console.log(maxSubArray([-1, 0]))
+  // console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))
+  // console.log(maxSubArray([8, -19, 5, -4, 20]))
+  // console.log(maxSubArray([5, -1, -1, -1, 4, -4]))
+
+</script>
+</html>

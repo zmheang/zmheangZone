@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    console.log('hello world')
+    /**
+     * @param {string} s
+     * @return {number}
+     */
+    // let lengthOfLongestSubstring = function(str) {
+    //     let tempList = str.split('')
+    //     let nums = []
+    //     // 'abc'
+    //     // 'wsslpluuwekuaxt'
+    //     // 'abcabcdbbc'
+    //     //  3334332121
+    //     //  1. 遍历最外层得到每个元素开头对应的无重复子串数目
+    //     //  2. 比较最大的数字
+    //     if(tempList.length > 0) {
+    //         // 本地可通过，线上会死
+    //         // for (let j = 0; j < tempList.length; j++) {
+    //         //     if(tempList.length - j < nums.sort((a, b) => a-b)[nums.length - 1]) {
+    //         //         break
+    //         //     }else {
+    //         //         let length = 1
+    //         //         let strs = []   // 当前无重复子串
+    //         //         strs.push(tempList[j])
+    //         //         for (let i = j + 1; i < tempList.length; i++) {
+    //         //             // 从当前的下一位开始，依次存入 strs 中(需要判断一下 strs 中是否已存在)
+    //         //             if(strs.includes(tempList[i])) {
+    //         //                 length = strs.length
+    //         //                 break
+    //         //             }else {
+    //         //                 strs.push(tempList[i])
+    //         //                 if(i === tempList.length -1) {
+    //         //                     length = strs.length
+    //         //                 }
+    //         //             }
+    //         //         }
+    //         //         nums.push(length)
+    //         //         console.log(nums)
+    //         //     }
+    //         // }
+    //         tempList.forEach((item, index) => {
+    //             let length = 1
+    //             let strs = []   // 当前无重复子串
+    //             strs.push(item)
+    //             for (let i = index + 1; i < tempList.length; i++) {
+    //                 // 从当前的下一位开始，依次存入 strs 中(需要判断一下 strs 中是否已存在)
+    //                 if(strs.includes(tempList[i])) {
+    //                     length = strs.length
+    //                     break
+    //                 }else {
+    //                     strs.push(tempList[i])
+    //                     if(i === tempList.length -1) {
+    //                         length = strs.length
+    //                     }
+    //                 }
+    //             }
+    //             nums.push(length)
+    //         })
+    //         return nums.sort((a, b) => a-b)[nums.length - 1]
+    //     }else {
+    //         return 0
+    //     }
+    // };
+
+    let lengthOfLongestSubstring = function(s) {
+        if(s.length === 0) return 0
+        let map = new Map()
+        let max = 0
+        let left = 0
+        for(let i = 0; i < s.length; i++) {
+            if(map.has(s[i])) {
+                left = Math.max(left, map.get(s[i]) + 1)
+            }
+            map.set(s[i], i)
+            max = Math.max(max, i - left +1)
+        }
+        return max
+
+
+
+        // let start = 0
+        // let end = 1
+        // let strLength = str.length
+        // let tempStr = ''
+        // let res
+        //
+        // if(str === undefined || str === '' || str === null) {
+        //     res = 0
+        // }else {
+        //     if(start = 0) {res = 1}
+        //     if(str[end]) {
+        //         while(strLength - start < res) {
+        //             while(end < strLength) {
+        //                 tempStr = str.slice(start, end)
+        //
+        //                 end++
+        //             }
+        //             start++
+        //         }
+        //         res = 1
+        //     }else {
+        //         res = 1
+        //     }
+        // }
+        // return res
+    }
+
+    // console.log(lengthOfLongestSubstring(''));              // 0
+    console.log(lengthOfLongestSubstring('abcabcbb'));      // 3
+    console.log(lengthOfLongestSubstring('bbbbb'));         // 1
+    console.log(lengthOfLongestSubstring('pwwkew'));        // 3
+    console.log(lengthOfLongestSubstring('nigzhtkqxr'));    // 10
+    console.log(lengthOfLongestSubstring('abcdefg'));       // 7
+    console.log(lengthOfLongestSubstring('wsslpluuwekuaxt'));// 7
+    // console.log(lengthOfLongestSubstring('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\\"#$%&\'()*+,-./:;<=>?@[\\\\]^_`{|}'));// 7
+    // console.log(lengthOfLongestSubstring(''));// 7
+    // console.log(lengthOfLongestSubstring(null));// 7
+    // console.log(lengthOfLongestSubstring('1'));// 7
+
+
+</script>
+</html>

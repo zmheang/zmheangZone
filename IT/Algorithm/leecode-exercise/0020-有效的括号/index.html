@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  console.log('hello world!!!')
+  let isValid = function(s) {
+    let list = [')', ']', '}']
+    let map = {
+      ')': '(',
+      ']': '[',
+      '}': '{',
+    }
+    // 利用栈：array中的pop
+    // 空字符串为true
+    if(s.length === 0) return true
+    // 若长度不为偶数，直接返回false
+    if(s.length % 2 !== 0) return false
+    // 该方法只能辨识 ([{}]) 的情况， 不能辨识 ()[]{} 的情况
+    // let left = 0, right = s.length - 1
+    // while (left < right) {
+    //   if(!list.includes(s[right]) || s[left] !== map[s[right]]){
+    //     flag = false
+    //     return false
+    //   }
+    //   left++
+    //   right--
+    // }
+
+    // 模拟栈
+    let stack = new Array()
+    for (let i = 0; i < s.length; i++) {
+      if(list.includes(s[i])) {
+        if(map[s[i]] !== stack.pop()) return false
+      }else {
+        stack.push(s[i])
+      }
+    }
+    if(stack.length === 0) {
+      return true
+    }else {
+      return false
+    }
+  };
+
+
+  console.log(isValid("()"))        // true
+  console.log(isValid("()[]{}"))    // true
+  console.log(isValid("(]"))        // false
+  console.log(isValid("([)]"))      // false
+  console.log(isValid("{[]}"))      // true
+
+
+</script>
+</html>
