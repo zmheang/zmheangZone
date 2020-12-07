@@ -5,29 +5,11 @@
   <title>Title</title>
 </head>
 <body>
-
 </body>
 <script>
   // 原理：从第二位开始每次将该数先缓存起来，然后依次向前比较，直到找到合适的位置（满足排序条件）
   // 解释：就像一把扑克牌，从左往右第二张开始，抽出来，向左进行滑动比较，
   //      每划过一张，那张牌就向右一个位置，直到找到合适的位置，刚好也会有一个空位
-  // const insertSort = (arrNums) => {
-  //   // 从第二位开始
-  //   for (let i = 1; i < arrNums.length; i++) {
-  //     // 将值缓存起来
-  //     let curVal = arrNums[i]
-  //     let j = i - 1
-  //     // 依次和自己左边的数进行比较，比较的时候尽量从右到左进行比较，这样移动的话比较方便
-  //     while(j > 0 && arrNums[j] > curVal) {
-  //       arrNums[j + 1] = arrNums[j]
-  //       j = j - 1
-  //     }
-  //     arrNums[j + 1] = curVal
-  //     // 此时 i 左侧的数组是排好序的
-  //   }
-  //   return arrNums
-  // }
-
   const insertSort = (arrNums) => {
     // 从第二位开始
     for (let i = 1; i < arrNums.length; i++) {
@@ -35,7 +17,7 @@
       let curVal = arrNums[i]
       let j = i - 1
       // 依次和自己左边的数进行比较，比较的时候尽量从右到左进行比较，这样移动的话比较方便
-      while(j > -1 && arrNums[j] < curVal) {
+      while(j > -1 && arrNums[j] > curVal) {
         arrNums[j + 1] = arrNums[j]
         j = j - 1
       }
@@ -45,8 +27,31 @@
     return arrNums
   }
 
+  // const insertSort = (arrNums) => {
+  //   // 从第二位开始
+  //   for (let i = 1; i < arrNums.length; i++) {
+  //     // 将值缓存起来
+  //     let curVal = arrNums[i]
+  //     let j = i - 1
+  //     // 依次和自己左边的数进行比较，比较的时候尽量从右到左进行比较，这样移动的话比较方便
+  //     while(j > -1 && arrNums[j] < curVal) {
+  //       arrNums[j + 1] = arrNums[j]
+  //       j = j - 1
+  //     }
+  //     arrNums[j + 1] = curVal
+  //     // 此时 i 左侧的数组是排好序的
+  //   }
+  //   return arrNums
+  // }
+
   console.log(insertSort([11, 4, 3, 5, 6, 7, 8, 9, 7, 33, 42, 2, 34]))
   console.log(insertSort([1]))
 
 </script>
+<style>
+  .border{
+    width: 100px;
+    height: 100px;
+  }
+</style>
 </html>
