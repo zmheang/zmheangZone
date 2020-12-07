@@ -1,4 +1,4 @@
-###file-saver
-[git地址](https://github.com/axios/axios)
-[官方文档](http://www.axios-js.com/)
-简介：一个基于Promise 的HTTP 库，可用在 Node.js 和浏览器上发送 HTTP 请求，支持所有现代浏览器，甚至支持 IE8+
+###KeyboardJS
+[git地址](https://github.com/RobertWHurst/KeyboardJS)
+[官方文档]()
+简介： 一个在浏览器中使用的库（与node.js兼容）.它使开发人员可以轻松设置键绑定和使用组合键来设置复杂的绑定.
