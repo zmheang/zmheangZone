@@ -626,7 +626,7 @@ const source = { a: { b: { c: 1, d: 2 }, e: 3 }, f: { g: 2 } }
 console.log(objectFlat(source));
 
 // 18.图片懒加载
-// <img src="default.png" data-src="https://xxxx/real.png">
+// <img examples="default.png" data-examples="https://xxxx/real.png">
 function isVisible(el) {
   const position = el.getBoundingClientRect()
   const windowHeight = document.documentElement.clientHeight

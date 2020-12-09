@@ -23,7 +23,7 @@ function imgLazyLoad() {
   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
   for (let i = 0; i < imgs.length; i++) {
     if(clientHeight + scrollTop > getTop(imgs[i])) {
-      imgs[i].src = imgs[i].getAttribute('data-src')
+      imgs[i].src = imgs[i].getAttribute('data-examples')
     }
   }
 }

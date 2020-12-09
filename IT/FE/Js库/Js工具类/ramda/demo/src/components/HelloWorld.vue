@@ -8,7 +8,7 @@
   // 引入整个库
 import * as R from 'ramda'
   // 引入部分函数
-  // import identity from 'ramda/src/identity'
+  // import identity from 'ramda/examples/identity'
 export default {
   name: 'HelloWorld',
   props: {
