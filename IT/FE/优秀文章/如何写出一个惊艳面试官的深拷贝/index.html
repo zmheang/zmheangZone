@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  function deepCopy(target) {
+    if(typeof target === 'object') {
+      let cloneTarget = Array.isArray(target) ? [] : {};
+      for (const targetKey in target) {
+        cloneTarget[targetKey] = deepCopy(target[targetKey])
+      }
+    return cloneTarget
+    }else {
+      return target
+    }
+  }
+</script>
+<script>
+  console.log('hello world~~~')
+
+  let obj = {
+    name: 'zmheang',
+    age: 18,
+    hobby: ['唱', '跳', 'rap'],
+    money: null,
+    friend: {
+      name: 'lily',
+      age: 18
+    }
+  }
+  let clone = deepCopy(obj)
+  console.log(obj)
+  console.log(clone)
+</script>
+</html>
