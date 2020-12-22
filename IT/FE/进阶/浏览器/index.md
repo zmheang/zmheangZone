@@ -232,11 +232,90 @@
 
 ​		在JavaScript中，根据词法作用域的规则，内部函数总是可以访问外部函数中声明的变量，当通过调用一个外部函数返回一个内部函数后，及时该外部函数已经执行结束了，但是内部函数引用外部函数的变量依然保存在内存中，我们就把这些变量的集合成为闭包
 
+​		跟着代码来分析一遍闭包：
+
+```javascript
+function foo() {
+    var myName = " zmheang "
+    let test1 = 1
+    const test2 = 2
+    var innerBar = { 
+        setName:function(newName){
+            myName = newName
+        },
+        getName:function(){
+            console.log(test1)
+            return myName
+        }
+    }
+    return innerBar
+}
+var bar = foo()
+bar.setName(" lily ")
+bar.getName()
+console.log(bar.getName())
+```
+
+- 当JavaScript引擎执行到`foo`函数是，首先会编译，并创建一个空执行上下文
+- 在编译的过程中，遇到内部函数`setName`，JavaScript引擎还要对内部函数做一次快速的词法扫描，发现该内部函数引用了`foo`函数中的`myName`变量，由于是内部函数引用了外部函数变量，所以JavaScript引擎判断这是一个闭包，于是在堆空间创建一个`closure(foo)`的对象，用来保存`myName`变量
+- 接着继续扫描到`getName`方法时，发现该函数内部还引用变量`test1`，于是`JavaScript`引擎又将`test1`添加到`closure(foo)`对象中，这时候堆中的`closure(foo)`对象中就包含了`myName`和`test1`两个变量了
+- 由于`test2`并没有被内部函数引用，所以`test2`依然保存在调用栈中
+
+也就是说闭包的核心有两点：
+
+1. 预扫描内部函数
+2. 把内部函数引用的外部变量保存到堆中
+
+
+
 ### this
 
+首先要确定的一点是：`this` 和 作用域链之间没有任何的关系！！！
 
+`this` 是和执行上下文相关联的，每个执行上下文都对应了一个`this`，比如全局上下文中的`this`指的是`window`对象，函数执行上下文中的`this`指的是调用此函数时的对象，当然我们也可以将执行上下文中`this`指向其他对象，一般是通过`call`函数，还可以使用`new`来创建
 
+##### 当执行`new xxx（）`时，JavaScript做了什么：
 
+1. 首先创建一个空对象tempObj
+2. 接着调用`xxx.call（）`方法，并将tempObj作为`call`的参数，这样当`xxx`的执行上下文创建时，它的`this`就指向了`tempObj`对象
+3. 然后执行`xxx`函数，此时的`xxx`函数执行上下文中的`this`指向了`tempObj`对象
+4. 最后返回`tempObj`对象
+
+##### this的相关坑
+
+1. ###### 嵌套函数中的`this`不会从外层函数中继承
+
+   解决方法：在外层函数中使用变量将this缓存起来或者使用箭头函数
+
+2. ###### 普通函数中的`this`默认指向全局对象`window`
+
+   通过`call`来规定`this`的指向
+
+## V8工作原理
+
+### 数据的存储
+
+调用栈
+
+堆
+
+### 垃圾回收
+
+调用栈：ESP，
+
+堆：
+
+​	新生代：复制算法
+
+​	老生代：标记清除
+
+### 编译器/解释器
+
+。。。。
+
+## 浏览器中的页面循环系统
+
+。。。
 
 
 

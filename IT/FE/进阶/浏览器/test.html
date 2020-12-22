@@ -9,25 +9,24 @@
 </body>
 <script>
   console.log('hello world ~')
-  // var bar = {
-  //   myName:"time.geekbang.com",
-  //   printName: function () {
-  //     console.log(this.myName)
-  //   }
-  // }
-  // function foo() {
-  //   let myName = " 极客时间 "
-  //   return bar.printName
-  // }
-  // let myName = " 极客邦 "
-  // console.log(this)
-  // let _printName = foo()
-  // _printName()
-  // bar.printName()
-  function f() {
-    console.log(this
-    )
+  function foo() {
+    let myName = " 极客时间 "
+    let test1 = 1
+    const test2 = 2
+    const innerBar = {
+      setName:function(newName){
+        myName = newName
+      },
+      getName:function(){
+        console.log(test1)
+        return myName
+      }
+    }
+    return {test2, innerBar}
   }
-  f()
+  const {test2, innerBar} = foo()
+  innerBar.setName(" 极客邦 ")
+  console.log(innerBar.getName())
+  console.log(test2)
 </script>
 </html>
