@@ -384,9 +384,235 @@ https://wangdoc.com/javascript/async/general.html
 
   ### 异步操作
 
+  #### 单线程模型
+  
+  JavaScript一开始设计就是单线程的，将来也不一定会改变，虽然为了利用CPU多核的计算能力，HTML5提出`Web Worker`标准，允许JavaScript脚本创建多个线程，但是子线程完全受主线程控制，且不得操作DOM
+  
+  
+  
+  #### 同步任务和异步任务
+  
+  程序里的所有任务可以分为同步任务&异步任务
+  
+  ###### 同步任务：那些没有被引擎挂起，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务
+  
+  ###### 异步任务：那些被引擎放在一边，不进入主线程，而进入任务队列的任务。只有引擎认为i某个异步任务可以执行了，该任务才会进入主线程执行，排在异步任务后面得代码，不用等待异步任务结束，会发生运行
+  
+  
+  
+  #### 任务队列和事件循环
+  
+  `JavaScript`运行时除了一个正在运行的主线程，引擎害提供一个任务队列（task queue），里面是各种需要当前程序处理的异步任务（存在多个任务队列）
+  
+  首先主线程回去执行所有的同步任务，等到同步任务全部执行完，就回去看任务队列里面的异步任务。如果满足条件，那么异步任务就重新进入主线程开始执行，这时它就变成同步任务了，等到执行完，下一个异步任务在进入主线程开始执行。一旦程序任务队列清空，程序就结束执行
+  
+  异步任务的写法通常是回调函数。一旦异步任务重新进入主线程，就会执行对应的回调函数。如果一个异步任务没有回调函数，就不会进入任务队列也就是说不会重新进入主线程，因为没有用回调函数指定下一步的操作
+  
+  ###### `JavaScript`引擎怎么知道异步任务有没有结果，能不能进入主线程？
+  
+  引擎在不停的检查，一遍又一遍，只要同步任务执行完了，引擎就回去检查那些挂起来的异步任务是不是可以进入主线程了
+  
+  
+  
+  #### 异步操作的模式：
+  
+  - ##### 回调函数
+  
+    优点是简单，容易理解和实现，缺点是不利于代码维护，各个部分之间高度耦合，使得程序结构混乱，流程难以追踪，而且每个人物只能指定一个回调函数
+  
+  - ##### 事件监听
+  
+    优点是容易理解，可以绑定多个事件，每个事件指定多个回调函数，而且可以'去耦合'，有利于实现模块化，缺点是整个程序都要变成事件驱动，阅读代码时很难看出主流程
+  
+  - ##### 发布/订阅
+  
+  #### 异步操作的流程控制
+  
+  - 串行执行
+  
+    ```
+    var items = [ 1, 2, 3, 4, 5, 6 ];
+    var results = [];
+    
+    function async(arg, callback) {
+      console.log('参数为 ' + arg +' , 1秒后返回结果');
+      setTimeout(function () { callback(arg * 2); }, 1000);
+    }
+    
+    function final(value) {
+      console.log('完成: ', value);
+    }
+    
+    function series(item) {
+      if(item) {
+        async( item, function(result) {
+          results.push(result);
+          return series(items.shift());
+        });
+      } else {
+        return final(results[results.length - 1]);
+      }
+    }
+    
+    series(items.shift());
+    ```
+  
+    
+  
+  - 并行执行
+  
+    ```
+    var items = [ 1, 2, 3, 4, 5, 6 ];
+    var results = [];
+    
+    function async(arg, callback) {
+      console.log('参数为 ' + arg +' , 1秒后返回结果');
+      setTimeout(function () { callback(arg * 2); }, 1000);
+    }
+    
+    function final(value) {
+      console.log('完成: ', value);
+    }
+    
+    items.forEach(function(item) {
+      async(item, function(result){
+        results.push(result);
+        if(results.length === items.length) {
+          final(results[results.length - 1]);
+        }
+      })
+    });
+    ```
+  
+    
+  
+  - 串并结合
+  
+    ```
+    var items = [ 1, 2, 3, 4, 5, 6 ];
+    var results = [];
+    var running = 0;
+    var limit = 2;
+    
+    function async(arg, callback) {
+      console.log('参数为 ' + arg +' , 1秒后返回结果');
+      setTimeout(function () { callback(arg * 2); }, 1000);
+    }
+    
+    function final(value) {
+      console.log('完成: ', value);
+    }
+    
+    function launcher() {
+      while(running < limit && items.length > 0) {
+        var item = items.shift();
+        async(item, function(result) {
+          results.push(result);
+          running--;
+          if(items.length > 0) {
+            launcher();
+          } else if(running == 0) {
+            final(results);
+          }
+        });
+        running++;
+      }
+    }
+    
+    launcher();
+    ```
+  
+    
+  
+  ### 定时器
+  
+  
+  
+  ### Promise对象
+  
+  
+  
+  
+  
+  ## DOM
+  
+  ### 概述
+  
+  DOM是`JavaScript`操作网页的接口，全称为“文档对象模型”，它的作用是将网页转为一个`JavaScript`对象，从而可以用脚本进行各种操作
+  
+  浏览器根据DOM模型去渲染网页，程序员是用脚本去创建各种DOM
+  
+  
+  
+  DOM的最小醉成单位是节点：节点的类型有七种：
+  
+  | 节点的类型       | nodeType |                             | NodeName           | nodeValue        |      |
+  | ---------------- | -------- | --------------------------- | ------------------ | ---------------- | ---- |
+  | Document         | 9        | Node.DOCUMENT_NODE          | #document          | null             |      |
+  | DocumentType     | 10       | Node.DOCUMENT_TYPE_NODE     | 文档的类型         | null             |      |
+  | Element          | 1        | Node.ELEMENT_NODE           | 大写的标签名       | null             |      |
+  | Attr             | 2        | Node.ATTRIBUTE_NODE         | 属性的名称         | 节点本身的文本值 |      |
+  | Text             | 3        | Node.TEXT_NODE              | #text              | 节点本身的文本值 |      |
+  | Comment          | 8        | Node.COMMENT_NODE           | #comment           | 节点本身的文本值 |      |
+  | DocumentFragment | 11       | Node.DOCUMENT_FRAGMENT_NODE | #document-fragment | null             |      |
+  
+  ### Node接口
+  
+  #### 属性
+  
+  - `Node.prototype.nodeType`: 返回一个整数值。表示节点的类型
+  - `Node.prototype.NodeName`： 返回节点的名称
+  - `Node.prototype.nodeValue`: 返回一个字符串，表示当前节点本身的文本值
+  - `Node.prototype.textContent`： 返回当前节点和它所有后代节点的文本内容
+  - `Node.prototype.baseURI`:  返回一个字符串，表示当前网页的绝对路径
+  - `Node.prototype.ownerDocument`返回当前节点所在的顶层文档对象，即document对象
+  - `Node.prototype.nextSibling`: 返回紧跟在当前节点后面的第一个同级节点
+  - `Node.prototype.previousSibling `： 返回当前节点前面的，距离最近的一个同级节点
+  - `Node.prototype.parentNode`： 返回当前节点的父节点
+  - `Node.prototype.parentElement`：返回当前节点的父元素节点
+  - `Node.prototype.firstChild` | `Node.prototype.lastChild`: 返回当前节点的第一个子节点，或者最后一个子节点
+  - `Node.prototype.childNodes`： 返回Nodelist集合，成员包括当前节点的所有子节点
+  - `Node.prototype.isConnected`： 表示当前节点时候在文档中
+  
+  
+  
+  #### 方法
+  
+  - `Node.prototype.appendChild()`: 接收一个节点作为参数，将其作为最后一个子节点插入当前节点
+  - `Node.prototype.hasChildNodes`: 返回一个布尔值，表示当前节点是否有子节点
+  - `Node.prototype.cloneNode()`:  用于克隆一个节点，接收一个布尔值作为参数，表示是否克隆子节点
+  - `Node.prototype.insertBefore()`: 将某个节点插入父节点内部的指定位置
+  - `Node.prototype.removeChild()`: 接收一个子节点作为参数，用于从打当前节点移除该子节点
+  - `Node.prototype.replaceChild()`: 用于将一个新的节点，替换当前节点的某个子节点
+  - `Node.prototype.contains`： 返回一个布尔值，表示参数节点是否满足一下条件：
+    - 参数节点是当前节点
+    - 参数节点是当前节点的子节点
+    - 参数节点是当前节点的后代节点
+  - `Node.prototype.compareDocumentPosition`：与`contains`方法完全一致，返回一个六个比特位的二进制值，表示参数节点与当前节点的关系。
+  - `Node.prototype.isEqualNode(),Node.prototype.isSameNode()`: 检查两个节点是否相等
+  - `Node.prototype.normalize()`: 用于清理当前节点内部的所有文本节点
+  - `Node.prototype.getRootNode()`: 返回当前节点所在文档的根节点document
+  
+  ### NodeList接口，HTMLCollection接口
   
 
 
+
+### 	Document节点
+
+#### 	概述
+
+
+
+#### 	属性
+
+- ​		
+
+#### 	方法
+
+
+
+### 	Element节点
 
 
 
@@ -453,4 +679,29 @@ https://wangdoc.com/javascript/async/general.html
   - 对象的方法---调用该方法的对象
 
   可使用call(),apply()绑定指定的this值
+  
+- 代码嵌入网页的方法
+
+  - `script`元素内部直接写JavaScript代码
+
+    属性`type`：
+
+    - `text/javascript`：老式浏览器的默认值
+    - `application/javascript`:新式浏览器的值
+
+  - `script`元素加载外部脚本
+
+    `script`标签允许设置一个`integrity`属性，用来验证脚本的一致性
+
+  - 事件属性
+
+  - URL协议
+
+    即在URL的位置写入代码，使用这个URL的时候就会执行JavaScript代码
+
+    ```
+    <a href="javascript:console.log('Hello')">点击</a>
+    ```
+
+    
 

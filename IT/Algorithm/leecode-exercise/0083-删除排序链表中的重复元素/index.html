@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+
+  function ListNode(val, next) {
+    this.val = (val===undefined ? 0 : val)
+    this.next = (next===undefined ? null : next)
+  }
+
+  const deleteDuplicates = function (head) {
+    if (head && head.next) {
+      if (head.val == head.next.val) {
+        head.next = head.next.next
+        deleteDuplicates(head)
+      }else {
+        deleteDuplicates(head.next)
+      }
+    }
+    return head
+  };
+
+  console.log(deleteDuplicates(new ListNode(1, new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3))))))))
+</script>
+</html>

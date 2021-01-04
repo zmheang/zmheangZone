@@ -18,36 +18,36 @@
   const plusOne = function(digits) {
     let arr = []
     let a = 0
-    for (let i = 0; i < digits.length; i++) {
-      if(i == 0) {
-        if(digits.pop()) {
-          if(digits.pop() + 1 > 9) {
-            a = 1
-            arr.unshift(0)
-          }else {
-            a = 0
-            arr.unshift(digits.pop() + 1)
-          }
+    for (let i = digits.length - 1; i >= 0; i--) {
+      if(i == digits.length - 1) {
+        if(digits[i] + 1 > 9) {
+          a = 1
+          arr.unshift(0)
+        }else {
+          a = 0
+          arr.unshift(digits[i] + 1)
         }
       }else {
-        if(digits.pop()) {
-          if(digits.pop() + a > 9) {
-            a = 1
-            arr.unshift(0)
-          }else {
-            a = 0
-            arr.unshift(digits.pop())
-          }
+        if(digits[i] + a > 9) {
+          a = 1
+          arr.unshift(0)
+        }else {
+          arr.unshift(digits[i] + a)
+          a = 0
         }
       }
+    }
+    if(a == 1) {
+      arr.unshift(1)
     }
     return arr
   };
 
   console.log(plusOne([1,2,3]))
   console.log(plusOne([4,3,2,1]))
-  console.log(plusOne([0]))
-  console.log(plusOne([0, 0]))
-  console.log(plusOne([6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,3]))
+  console.log(plusOne([8,9,9]))
+  // console.log(plusOne([0]))
+  // console.log(plusOne([0, 0]))
+  // console.log(plusOne([6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,3]))
 </script>
 </html>

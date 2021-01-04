@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <h1>爬楼梯</h1>
+  <h2>第n阶楼梯只能从，n-1或者n-2阶上来</h2>
+</body>
+<script>
+  const climbStairs = function(n) {
+    let n1 = 1, n2 = 2
+    if(n == 1) return n1
+    if(n == 2) return n2
+    let temp
+    for (let i = 2; i < n; i++) {
+      temp = n2
+      n2 = n1 + n2
+      n1 = temp
+    }
+    return n2
+  };
+  console.log(climbStairs(45))
+</script>
+</html>

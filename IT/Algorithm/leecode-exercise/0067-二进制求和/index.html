@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  console.log('hello world ~~~')
+  const addBinary = function(a, b) {
+    let result = ''
+    let carry = 0
+    const addByOne = function addByOne(x, y) {
+      if(Number(x) + Number(y) + carry > 1) {
+        let b = Number(x) + Number(y) + carry - 2
+        carry = 1
+        return b
+      }else {
+        let a = Number(x)?Number(x):0 + Number(y)?Number(y):0 + carry
+        carry = 0
+        return a
+      }
+    }
+    while (a || b) {
+      result = addByOne(a.charAt(a.length - 1), b.charAt(b.length - 1)) + '' + result
+      a = a.slice(0, a.length - 1)
+      b = b.slice(0, b.length - 1)
+    }
+    if(carry) {
+      result = '1' + result
+    }
+    return result
+  };
+
+
+  console.log(addBinary('11', '1'))
+  console.log(addBinary('1010', '1011'))
+</script>
+</html>
