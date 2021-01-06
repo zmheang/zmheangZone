@@ -333,37 +333,300 @@ console.log(bar.getName())
 
 
 
+## window对象
+
+### 一、 概述
+
+​			在浏览器中，`window`对象就是指当前的浏览器窗口，也是当前页面的顶层对象，所有其他对象就是它的下属。一个变量如果未声明那么默认就是顶层对象的属性
+
+### 二、 属性和方法
+
+- ####      属性
+
+  - window.name： 一个字符串，表示当前浏览器的名字
+
+  - window.closed： 布尔值，表示窗口是否关闭
+
+  - window.opener：表示打开当前窗口的父窗口
+
+  - window.self、window.window：都指向窗口本身
+
+  - window.frames：返回一个类似数组的对象，成员为页面内所有框架窗口
+
+  - window.length：返回当前网页包括的框架总数
+
+  - window.frameElement：主要用于当前窗口嵌在另一个网页的情况，返回当前窗口所在的那个元素节点
+
+  - window.top、window.parent：
+
+  - window.status：用于读写浏览器状态栏的文本
+
+  - window.devicePixelRatio：返回一个数值，表示一个CSS像素和一个物理像素大小之间的比率
+
+  - ###### 位置属性
+
+    - window.screenX\Y：返回浏览器窗口左上角相对于屏幕左上角的水平距离和垂直距离
+    - window.innerHeight\innerWidth：返回网页在当前窗口中可见部分的高度和宽度（视口）
+    - window.outerHeight\outerWidth：返回浏览器窗口的高度和宽度，包括浏览器菜单和边框
+    - window.scrollX\scrollY：返回页面的水平滚动距离
+    - window.pageXOffset\pageYOffset：同上
+
+  - ###### 组件属性
+
+    - window.locationbar： 地址栏对象
+    - window.menubar：菜单栏对象
+    - window.scrollbars：窗口的滚动条对象
+    - window.toolbar：工具栏对象
+    - window.statusbar：状态栏对象
+    - window.personalbar：用户安装的个人工具栏对象
+
+  - ###### 全局对象
+
+    - window.document：指向document对象
+    - window.location：指向location对象
+    - window.navigator：指向navigator对象
+    - window.history：指向history对象
+    - window.localStorage：指向本地存储的localStorage数据
+    - window.sessionStorage：指向本地存储的sessionStorage数据
+    - window.console：指向console对象
+    - window.screen：指向screen对象
+
+  - window.isSecureContext：布尔值，表示当前窗口是否处在加密环境（https）中
+
+- ####      方法
+
+  - window.alert()：弹出对话框（参数只能是字符串）
+  - window.prompt()：可交互的对话框，返回用户输入的信息
+  - window.confirm()：只有确定和取消的对话框，返回布尔值
+  - window.open()：新建一个浏览器窗口
+  - window.close()：用于关闭当前窗口
+  - window.stop()：等同于点击浏览器的停止按钮
+  - window.moveTo()：用于移动浏览器窗口到指定位置
+  - window.moveBy()：移动到一个相对位置
+  - window.resizeTo()：用于缩放窗口到指定大小
+  - window.resizeBy()：用于缩放窗口相对大小
+  - window.scrollTo()\scroll()\scrollBy()：将文档滚动到指定位置
+  - window.print()：跳出打印对话框
+  - window.focus()\blur()：激活窗口或者将焦点从窗口移除
+  - window.getSelection()：返回一个Selection对象，表示用户现在选中的文本
+  - window.getComputedStyle()：接收一个元素作为参数，返回一个包含该元素的最终样式信息的对象
+  - window.matchMedia()：用来检查CSS的mediaQuery语句
+  - window.requestAnimationFrame()：也是推迟某个函数的执行
+  - window.requestldleCallback()：也是推迟某个函数的执行
+
+### 三、 事件
+
+- load事件和onload属性：文档在浏览器窗口加载完毕时
+- error事件和onerror属性：浏览器脚本发生错误时
+- window对象的事件监听属性
+
+### 四、 多窗口
+
+。。。[浏览器多窗口相关](https://wangdoc.com/javascript/bom/window.html#%E6%A6%82%E8%BF%B0)
+
+## Navigator对象
+
+[Navigator对象](https://wangdoc.com/javascript/bom/navigator.html)
 
 
 
+## Screen对象
+
+[screen对象](https://wangdoc.com/javascript/bom/navigator.html#screen-%E5%AF%B9%E8%B1%A1)
 
 
 
+## Cookie对象
+
+### 概述
+
+Cookie是服务器保存在浏览器中的一小段文本信息，一般大小不能超过4KB，浏览器每次向服务器发出请求都会携带这段信息，服务器如果希望在浏览器保存Cookie，就要在HTTP回应的头信息里面放置一个`Set-Cookie`字段，服务器如果想修改一个之前设置的`Cookie`值，必须同时满足四个条件：`Cookie`的key，domain，path 和 secure都匹配
+
+### 属性
+
+- #### Expires
+
+  指定一个具体的到期时间，到了指定时间以后，浏览器就不再保存这个Cookie，它的值是UTC格式，可以使用`Date.prototytpe.toUTCString()`，不设置该值，默认当前会话有效
+
+- #### Max-Age
+
+  从现在开始Cookie的存在秒数，优先
+
+- #### Domain
+
+  指定浏览器发出HTTP请求时，哪些域名药附带这个Cookie，如果没有该值，默认将其设为当前域名
+
+- #### Path
+
+  指定浏览器发出HTTP请求时，哪些路径药附带这个Cookie
+
+- #### Secure
+
+  指定浏览器只有在加密协议下才能将Cookie发送到服务器
+
+- #### HttpOnly
+
+  指定该Cookie无法通过JavaScript脚本拿到
+
+- #### SameSite
+
+  Chrome51开始新增的属性用来防止CSRF攻击和用户追踪
+
+  - Strict
+  - Lax
+  - None
+
+## XMLHttpRequest对象
+
+[XHR对象](https://wangdoc.com/javascript/bom/xmlhttprequest.html)
 
 
 
+## 同源政策（同源限制）
+
+### 概述
+
+最初的含义是指：A网页设置的`Cookie`，B网页不能打开，除非这两个网页‘同源’，即协议相同，域名相同，端口相同（但是浏览器没有遵守这条）
+
+目前如果非同源，共有三种行为受到限制
+
+1. 无法读取非同源网页的Cookie、LocalStorage 和 IndexedDB
+2. 无法接触非同源网页的DOM
+3. 无法向非同源地址发送Ajax请求（可以发，但是浏览器会拒绝接受响应）
 
 
 
+对于完全不同源的网站，目前有两种方法可以解决窗口的通信问题：
+
+1. ###### 片段识别符
+
+   片段标识符是指URl的#号后面的部分，只是改变片段标识符，页面不会重新刷新，这样我们就可以将父窗口要传递的信息，写入iframe窗口的片段标识符，子窗口通过监听hashchange()事件得到通知
+
+2. ###### 跨文档通信API
+
+   window.postMessage()：
+
+   
+
+关于Ajax请求，只能发送给同源地址，否则就报错，有三种方法规避这个限制：
+
+1. ###### JSONP
+
+   1. 网页添加一个`<script>`元素，向服务器请求一个脚本。这是不受同源政策的限制的
+
+      ```
+      <script src="http://api.foo.com?callback=bar"></script>
+      ```
+
+      注意，请求的脚本网址有一个callback参数，用来告诉服务器，客户端的回调函数是bar
+
+   2. 服务器收到请求后，拼接一个字符串，将JSON数据放在函数名里面，作为字符串返回
+
+   3. 客户端会将服务器返回的字符串作为代码解析，这时，只要客户端定义了bar()函数，就能在该函数体内拿到服务器返回的JSON数据
+
+2. ###### WebSocket
+
+   一种不实行同源政策的通信协议
+
+3. ###### CORS
+
+   [cors相关](https://wangdoc.com/javascript/bom/cors.html)
 
 
 
+## Storage接口
+
+sessionStorage和localStorage实现了Storage接口
+
+sessionStorage： 保存的数据是会话级别的
+
+localStorage：可长期存储，下次访问该网页也可以读取
+
+#### 属性：
+
+length：保存的数据项个数
+
+#### 方法：
+
+- setItem()：保存数据项，也可以直接赋值
+- getItem()：读取数据项
+- removeItem()：清除某个数据项
+- clear()：清空所有数据项
+- key()：接受一个整数作为参数，返回该位置对应的键值key
+
+#### 事件：
+
+```
+function onStorageChange(e) {
+  console.log(e.key);
+}
+
+window.addEventListener('storage', onStorageChange);
+```
+
+- `StorageEvent.key`：字符串，表示发生变动的键名。如果 storage 事件是由`clear()`方法引起，该属性返回`null`。
+- `StorageEvent.newValue`：字符串，表示新的键值。如果 storage 事件是由`clear()`方法或删除该键值对引发的，该属性返回`null`。
+- `StorageEvent.oldValue`：字符串，表示旧的键值。如果该键值对是新增的，该属性返回`null`。
+- `StorageEvent.storageArea`：对象，返回键值对所在的整个对象。也说是说，可以从这个属性上面拿到当前域名储存的所有键值对。
+- `StorageEvent.url`：字符串，表示原始触发 storage 事件的那个网页的网址
+
+## History对象
+
+[history对象](https://wangdoc.com/javascript/bom/history.html)
 
 
 
+## Location、URL、URLSearchParams对象
+
+[url](https://wangdoc.com/javascript/bom/location.html)
 
 
 
+## File对象
+
+[file对象](https://wangdoc.com/javascript/bom/file.html)
 
 
 
+## FormData对象
+
+[form](https://wangdoc.com/javascript/bom/form.html)
 
 
 
+## indexedDB
+
+[indexedDB](https://wangdoc.com/javascript/bom/indexeddb.html)
 
 
 
+## Web Worker
 
+### 注意点：
+
+1. ###### 同源限制
+
+   分配给Worker线程运行的脚本文件，必须与主线程的脚本文件同源
+
+2. ###### DOM限制
+
+   Worker线程所在的全局对象，与主线程不一样，无法读取主线程所在网页的DOM对象，也无法使用`document`、`window`、`parant`这些对象，但是可以使用`navigator`、`Location`
+
+3. ###### 全局对象限制
+
+   同上
+
+4. ###### 通信联系
+
+   Worker线程和主线程不在同一个上下文环境，他们不能直接通信，必须通过消息完成
+
+5. ###### 脚本限制
+
+   Worker线程不能执行`alert()`、`conform()`方法，但是可以使用`xhr`发Ajax请求
+
+6. ###### 文件限制
+
+   Worker线程无法读取本地文件，即不能打开本地的文件系统，只能加载网络的资源
 
 
 
