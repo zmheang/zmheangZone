@@ -193,14 +193,7 @@
 
 ### 7.浏览器解析响应请求，并渲染页面
 
-1. 渲染进程将HTML内容转化为DOM树
-2. 渲染进程将CSS转化为styleSgeets
-3. 创建布局树，并计算元素的布局信息
-4. 对布局进行分层，并生成分层树
-5. 为每个图层生成绘制列表，并将其提交到合成线程
-6. 合成线程将图层分成图块，并在光栅化线程池中将图块转换成位图
-7. 合成线程发送绘制图块命令DrawQuad给浏览器进程
-8. 浏览器根据DrawQuad消息生成页面，并显示到显示器上 
+​	渲染流程见下面
 
 ### 8.网页加载流程
 
@@ -327,7 +320,119 @@ console.log(bar.getName())
 
 。。。。
 
+## 渲染流程
+
+名词：
+
+DOM树：
+
+CSSOM树：
+
+Render树：
+
+重绘（repaint）：没有改变元素的几何信息
+
+重排（reflow）：修改了元素的几何信息
+
+视口（ViewPort）：一个页面中用户能够看到的部分
+
+层叠上下文：满足下列任意一个条件形成
+
+- 文档根元素（`<html>`）；
+
+- [`position`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/position) 值为 `absolute`（绝对定位）或  `relative`（相对定位）且 [`z-index`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/z-index) 值不为 `auto` 的元素；
+
+- [`position`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/position) 值为 `fixed`（固定定位）或 `sticky`（粘滞定位）的元素（沾滞定位适配所有移动设备上的浏览器，但老的桌面浏览器不支持）；
+
+- flex ([`flexbox`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flexbox)) 容器的子元素，且 [`z-index`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/z-index) 值不为 `auto`；
+
+- grid ([`grid`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/grid)) 容器的子元素，且 [`z-index`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/z-index) 值不为 `auto`；
+
+- [`opacity`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/opacity) 属性值小于 `1` 的元素（参见 [the specification for opacity](http://www.w3.org/TR/css3-color/#transparency)）；
+
+- [`mix-blend-mode`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/mix-blend-mode) 属性值不为 `normal` 的元素；
+
+- 以下任意属性值不为
+
+   
+
+  ```
+  none
+  ```
+
+   
+
+  的元素：
+
+  - [`transform`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/transform)
+  - [`filter`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter)
+  - [`perspective`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/perspective)
+  - [`clip-path`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/clip-path)
+  - [`mask`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/mask) / [`mask-image`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/mask-image) / [`mask-border`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/mask-border)
+
+- [`isolation`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/isolation) 属性值为 `isolate` 的元素；
+
+- [`-webkit-overflow-scrolling`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/-webkit-overflow-scrolling) 属性值为 `touch` 的元素；
+
+- [`will-change`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/will-change) 值设定了任一属性而该属性在 non-initial 值时会创建层叠上下文的元素（参考[这篇文章](http://dev.opera.com/articles/css-will-change-property/)）；
+
+- [`contain`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/contain) 属性值为 `layout`、`paint` 或包含它们其中之一的合成值（比如 `contain: strict`、`contain: content`）的元素。
+
+### 构建DOM树
+
+### 样式计算
+
+1. ##### 将CSS转换为浏览器能够理解的结构
+
+2. ##### 转换样式表中的属性值，使其标准化
+
+3. ##### 计算出DOM树中每个节点的具体样式
+
+### 布局阶段
+
+1. ##### 创建布局
+
+2. ##### 布局计算
+
+### 分层
+
+#### 满足哪些条件。渲染引擎才会为特定的节点创建新的图层？
+
+1. ##### 拥有层叠上下文属性的元素会被提升为单独的一层
+
+2. ##### 需要裁剪的地方会被创建为图层-----------什么是裁剪？
+
+### 图层绘制
+
+完成图层树之后，渲染引擎将一个个图层的绘制拆分为许多个小的绘制指令，组成一个绘制列表
+
+### 栅格化操作
+
+渲染主线程拆分成一个个绘制列表之后，commit给合成线程，合成线程会将图层划分为图块（tile），合成线程会将视口附近的图块优先生成位图。渲染进程维护了一个栅格化的线程池，所有的图块栅格化都是在线程池内进行的，栅格化的过程往往会使用GPU进行加速，生成的位图保存在GPU内存中
+
+### 合成和显示
+
+等到所有图块都被光栅化之后，合成线程就会生成一个绘制图块的命令---'DrawQuad'，将命令提交给浏览器进程，进程中有个viz组件，用来接收DrawQuad命令，将其页面内容绘制在内存中，最后再将内存显示在屏幕上
+
+
+
+
+
 ## 浏览器中的页面循环系统
+
+上面我们提到了渲染进程，合成线程等等，这之间是怎样的配合运行的？
+
+### 消息队列和事件循环系统
+
+主线程循环从消息队列中取任务执行，其他线程不断往消息队列中添加任务
+
+但是这样又存在消息队列中的任务优先级问题以及单个任务执行时间过长的问题
+
+### 微任务和宏任务
+
+我们把消息队列中的任务称为宏任务，每个宏任务都包含了一个微任务队列，在执行宏任务的过程中，如果DOM有变化，那么就将改变化添加到微任务队列中，这样就不会影响到宏任务的继续执行，等宏任务的主要功能都直接完成之后，这时候再执行当前宏任务中的微任务
+
+
 
 。。。
 
@@ -630,7 +735,22 @@ window.addEventListener('storage', onStorageChange);
 
 
 
+## 开发者工具
 
+| 名称        | 描述                                                         |
+| ----------- | ------------------------------------------------------------ |
+| Elements    | 可以查看DOM结构，编辑CSS样式，用于测试页面布局和设计页面     |
+| Console     | 可以看作JavaScript Shell，能执行js脚本，还可以通过Console和页面中的js对象交互 |
+| Sources     | 1. 查看Web应用加载的所有文件<br />2. 编辑CSS和JavaScript的文件内容<br />3. 将打乱的CSS文件和JavaScript文件格式化<br />4. 支持JavaScript的调试功能<br />5. 设置工作区，将更改的文件保存到本地文件夹中 |
+| NetWork     | 展示了页面中所有的请求内容列表，能查看每项请求的请求行、请求头、请求体、时间线以及网络请求瀑布图等信息 |
+| Performance | 记录和查看Web应用生命周期内的各种事件，并用来分析在执行过程中一些影响性能的要点 |
+| Memory      | 用来查看运行过程中的JavaScript占用堆内存情况，追踪是否存在内存泄漏的情况等 |
+| Application | 查看Web应用的数据存储情况：<br />PWA的基础数据、IndexedDB、Web SQL、本地和会话存储、Cookie、应用程序缓存、图像、字体和样式表等等 |
+| Security    | 显示当前页面一些基础的安全信息                               |
+| Audits      | 会对当前网页进行网络利用情况、网页性能方面的诊断，并给出一些优化建议 |
+| Layers      | 展示一些渲染过程中分层的基础信息                             |
+
+简单来说，chrome开发者工具为我们提供了通过页面访问或者编辑DOM和CSSOM的能力，还提供了强大的调试功能和查看性能指标的能力
 
 
 
