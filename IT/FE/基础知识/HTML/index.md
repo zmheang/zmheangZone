@@ -22,7 +22,7 @@
 |   spellcheck    |           规定是否对元素进行拼写和语法检查           |    是    |                                                              | Internet Explorer 9 以及更早的版本不支持 spellcheck 属性  | true/false      |
 |      style      |                  规定元素的行内样式                  |    否    |                                                              | 所有                                                      |                 |
 |    tabindex     |                 规定元素的tab键次序                  |    否    |                                                              | 除了 Safari                                               |                 |
-|      title      |               规定有关元素得分额外信息               |    否    |                                                              | 所有                                                      |                 |
+|      title      |               规定有关元素的额外信息               |    否    |                                                              | 所有                                                      |                 |
 |    translate    |               规定是否应该翻译元素内容               |    是    |                                                              | 主流都不支持                                              | yes/no          |
 
 ### artice元素
