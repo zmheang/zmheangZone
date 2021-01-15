@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  console.log('hello world ~')
+  // 0 <= m, n <= 200
+  // 1 <= m + n <= 200
+  // nums1.length == m + n
+  // nums2.length == n
+  // -10的9次方 <= nums1[i], nums2[i] <= 10的9次方
+  let arr1 = [1,2,3,0,0,0]
+  let arr2 = [2,5,6]
+  let m = 3
+  let n = 3
+  const mergeArrays = (nums1, m, nums2, n) => {
+    for (let i = nums1.length - 1; i >= 0; i--) {
+      if (m <= 0 || nums1[m-1] <= nums2[n-1]) nums1[i] = nums2[--n];
+      else if (n <= 0 || nums1[m-1] > nums2[n-1]) nums1[i] = nums1[--m];
+    }
+    return nums1
+  }
+
+  console.log(mergeArrays(arr1, m, arr2, n))
+
+
+
+</script>
+</html>

@@ -597,6 +597,69 @@ https://wangdoc.com/javascript/async/general.html
   
   ### NodeList接口，HTMLCollection接口
   
+  #### 概述
+  
+  `NodeList`可以包含各种类型的节点，`HTMLCollection`只能包含HTML元素节点
+  
+  
+  
+  ### `ParentNode`接口，`ChildNode`接口
+  
+  
+  
+  ### `Document`节点
+  
+  #### 概述
+  
+  `document`节点对象代表整个文档，每张网页都有自己的`document`对象，`window.document`属性就指向这个对象，只要浏览器开始载入HTML文档，该对象就存在了，可以直接使用
+  
+  ###### 获取方法：
+  
+  - 正常的网页，直接`document`或 `window.document`
+  - `iframe`框架里面的网页，使用`iframe`节点的`contentDocument`属性
+  - Ajax操作返回的文档，使用`XMLHttpRequest`对象的`responseXML`属性
+  - 内部节点的`ownerDocument`属性
+  
+  `document`对象继承了`EventTarget`接口和`Node`接口，并且混入了`ParentNode`接口
+  
+  #### 属性
+  
+  - `defaultView`属性返回`document`对象所属的`window`对象
+  - `doctype`返回DTD节点
+  - `documentElement`属性返回当前文档的根元素节点
+  - `body`
+  - `head`
+  - `scrollingElement`属性返回文档的滚动元素
+  - `activeElement`属性返回获得当前焦点的DOM元素
+  - `fullscrollElement`属性返回当前以全屏状态展示的DOM元素
+  - 。。。。。
+  
+  
+  
+  #### 方法
+  
+  - `open`方法清除当前文档所有内容，使得文档处于可写状态，供`document.write()`写入内容
+  - `close`方法用来关闭`open()`打开的文档
+  - `write()   writeIn()`方法用于向文档写入内容
+  - `querySelector()   querySelectorAll()`接收一个CSS选择器，返回匹配的元素节点（`Node/NodeList`）
+  - `getElementsByTagName()`方法搜索HTML标签名，返回符合条件的元素（`HTMLCollection`）
+  - `getElementsByClassName()`方法返回一个类似数组的对象（`HTMLCollection`），包括了所有`class`名字符合指定条件的元素
+  - `getElementsByName`用于选择拥有name属性的HTML元素
+  - `getElementById()`方法返回匹配指定id属性的元素节点
+  - `elementFromPoint()`方法返回位于页面指定位置最上层的元素节点
+  - `elementsFromPoint()`返回一个数组，成员是位于指定位置的所有元素
+  - `createElement()`方法用来生成元素节点，并返回该节点
+  - `createTextNode()`方法用来生成文本节点（text），并返回该节点
+  - `createAttribute()`方法生一个新的属性节点，并返回它
+  - `createComment()`方法生成一个注释节点，并返回
+  - `createDocumentFragment()`方法生成一个空的文档片段对象
+  - `createEvent()`生成一个事件对象
+  - `addEventListener()   removeEventListener()   dispatchEvent()`
+  - `hasFocus()`返回布尔值，表当前文档之中是否有元素被激活
+  - `adoptNode() importNode()`
+  - `createNodeIterator()`
+  - `createTreeWalker()`
+  - `getSelection()`
 
 
 
