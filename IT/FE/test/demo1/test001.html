@@ -9,5 +9,20 @@
 </body>
 <script>
   console.log('111')
+  var obj = {};
+  Object.defineProperty(obj, "a", {
+    configurable: false,
+    enumerable: false,
+    value: 10,
+    writable: false
+  });
+  console.log(obj)
+  var p = new Proxy(obj, {
+    get: function(target, prop) {
+      return 10;
+    }
+  });
+
+  console.log(p.a)
 </script>
 </html>
