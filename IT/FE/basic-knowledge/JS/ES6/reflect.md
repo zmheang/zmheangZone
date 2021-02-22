@@ -15,9 +15,32 @@
 
 #### Reflect.get(target, name, receiver)
 
+```
+Reflect.get(target, propertyKey[, receiver])
+target: 需要取值的目标对象
+propertyKey:需要获取的值的键值
+receiver:如果 target 对象中指定了 getter， receiver则为 getter 调用时的 this 值
+```
+
 #### Reflect.set(target, name, value, receiver)
 
+```
+Reflect.set(target, propertyKey, value[, receiver])
+target: 设置属性的目标对象
+propertyKey：设置的属性的名称
+value: 设置的值
+receiver:如果遇到setter， receiver则为 setter 调用时 this 值
+```
+
 #### Reflect.has(obj, name)
+
+```
+Reflect.has(target, propertyKey)
+target： 目标对象
+propertyKey: 属性名
+```
+
+
 
 #### Reflect.deleteProperty(obj, name)
 
@@ -39,4 +62,18 @@
 
 #### Reflect.ownKeys(target)
 
-### 实例
+### 实例：使用 Proxy 实现观察者模式
+
+```
+const queuedObservers = new Set();
+
+const observe = fn => queuedObservers.add(fn);
+const observable = obj => new Proxy(obj, {set});
+
+function set(target, key, value, receiver) {
+  const result = Reflect.set(target, key, value, receiver);
+  queuedObservers.forEach(observer => observer());
+  return result;
+}
+```
+

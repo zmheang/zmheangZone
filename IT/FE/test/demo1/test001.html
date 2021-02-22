@@ -2,27 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>testDemo1</title>
 </head>
 <body>
 
 </body>
 <script>
-  console.log('111')
-  var obj = {};
-  Object.defineProperty(obj, "a", {
-    configurable: false,
-    enumerable: false,
-    value: 10,
-    writable: false
-  });
-  console.log(obj)
-  var p = new Proxy(obj, {
-    get: function(target, prop) {
-      return 10;
+  const _name = new WeakMap();
+
+  class Person {
+    constructor(name) {
+      _name.set(this, name);
+    }
+    get name() {
+      return _name.get(this);
+    }
+  }
+
+  const jane = new Person('Jane');
+  console.log(jane.name)
+
+  const proxy = new Proxy(jane, {
+    get: function (a, b) {
+      return a[b]
     }
   });
-
-  console.log(p.a)
+  console.log(proxy.name)
 </script>
 </html>

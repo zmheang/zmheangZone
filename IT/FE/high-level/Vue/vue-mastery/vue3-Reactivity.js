@@ -16,7 +16,7 @@ function trigger(target, key) {
 
 let user = { name: 'zmheang', age: 25 }
 let log = ''
-let effect = () => { log = `${user.name} is ${user.age}` }
+let effect = () => { console.log(`${user.name} is ${user.age}`) }
 
 track(user, 'age')
 effect()
