@@ -42,10 +42,32 @@ function count(arr = []) {
   return arr.reduce((t, v) => (t[v] = (t[v] || 0) + 1, t), {})
 }
 // 数字千分化
+// 暂时的问题：将负数新转为正数，最后在前面加上‘-’号
 function thousandNum(num = 0) {
+  const str = (+num).toString().split('.');
+  const int = nums => nums.split('').reverse().reduceRight((t, v, i) => t + (i % 3? v: `${v},`), '').replace(/^,|,$/g, '')
+  const dec = nums => nums.split('').reduce((t, v, i) => t + ((i + 1) % 3? v: `${v},`), '').replace(/^,|,$/g, '')
+  return str.length > 1? `${int(str[0])}.${dec(str[1])}`: int(str[0])
 
 }
-
+// 异步累计
+async function asyncAdd(arr = []) {
+  return arr.reduce(async(t, v) => {
+    const at = await t
+    const todo = await toDo(v)
+    at[v] = todo
+    return at
+  }, Promise.resolve({}))
+}
+// 子数组
+function childArrs(arr = []) {
+  return arr.reduce((t, v) => t.concat(t.map( ele => ele.concat(v))), [[]])
+}
+// 斐波那契数列
+function Fibonacci(len = 4) {
+  const arr = [...new Array(len).keys()]
+  return arr.reduce((t, v, i) => (i > 1 && t.push(t[i - 1] + t[i - 2]), t), [0, 1])
+}
 
 
 
@@ -65,4 +87,10 @@ let list3 = [1,2,3,3,5,7,8,4,2,3,4,5,6,7,8,9,0]
 // console.log(flatten(list2))
 // console.log(Uniq(list1))
 // console.log(max(list))
-console.log(count(list3))
+// console.log(count(list3))
+console.log(thousandNum(3.1415926535))
+console.log(thousandNum(-3652153727))
+// console.log(thousandNum(365253727))
+// console.log(asyncAdd(list))
+// console.log(childArrs(list))
+// console.log(Fibonacci(10))
