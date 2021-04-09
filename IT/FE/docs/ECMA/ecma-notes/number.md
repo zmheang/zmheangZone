@@ -8,6 +8,8 @@ by the program expression NaN.) In some implementations, external code might be 
 between various Not-a-Number values, but such behaviour is implementation-dependent; to ECMAScript code,
 all NaN values are indistinguishable from each other.
 
+`number`类型涵盖了 18437736874454810627 （也就是2的64次方 - 2的53次方 + 3）个值，
+
 
 
 `The bit pattern that might be observed in an ArrayBuffer (see 24.1) after a Number value has been stored into it
