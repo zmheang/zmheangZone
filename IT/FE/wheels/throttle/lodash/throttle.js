@@ -1,5 +1,8 @@
 import debounce from '../../debounce/lodash/debounce.js'
-import isObject from '../../debounce/lodash/isObject.js'
+function isObject(value) {
+  const type = typeof value
+  return value != null && (type === 'object' || type === 'function')
+}
 
 /**
  * Creates a throttled function that only invokes `func` at most once per

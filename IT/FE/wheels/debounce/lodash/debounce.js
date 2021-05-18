@@ -1,5 +1,13 @@
-import isObject from './isObject.js'
-import root from './root.js'
+const freeGlobal = typeof global === 'object' && global !== null && global.Object === Object && global
+const freeGlobalThis = typeof globalThis === 'object' && globalThis !== null && globalThis.Object == Object && globalThis
+const freeSelf = typeof self === 'object' && self !== null && self.Object === Object && self
+/** Used as a reference to the global object. */
+const root = freeGlobalThis || freeGlobal || freeSelf || Function('return this')()
+
+function isObject(value) {
+  const type = typeof value
+  return value != null && (type === 'object' || type === 'function')
+}
 
 /**
  * Creates a debounced function that delays invoking `func` until after `wait`
