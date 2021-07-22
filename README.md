@@ -11,7 +11,7 @@
 内容很杂，什么都会放进来的
 
 <a href='https://github.com/zmheang/zmheangZone/blob/main/IT/Algorithm/index.md'>aaa</a>
-<a href='./blob/main/IT/Algorithm/index.md'>bbb</a>
+<a href='./IT/Algorithm/index.md'>bbb</a>
 
 
 
